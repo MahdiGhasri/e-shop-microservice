@@ -1,0 +1,11 @@
+package com.mgh.customer.exception;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class CustomerNotFoundException extends RuntimeException {
+	private static final long serialVersionUID = 1L;
+	private final String message;
+}
