@@ -6,7 +6,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - /data/customer_mongo_db:/data/db
+      - ./data/customer_mongo_db:/data/db
     restart: unless-stopped
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
@@ -23,3 +23,29 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: admin
       ME_CONFIG_MONGODB_URL: mongodb://root:admin@mongo-db:27017/
       ME_CONFIG_BASICAUTH: false
+  
+  product-pg-db-service:
+    container_name: product_pg_db
+    image: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: product
+    ports:
+      - 5433:5432
+    volumes:
+      - ./data/product_pg_db:/var/lib/postgresql/data
+
+  pgadmin-service:
+      container_name: pgadmin
+      image: dpage/pgadmin4
+      environment:
+        PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+        PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+        PGADMIN_CONFIG_SERVER_MODE: 'False'
+      restart: unless-stopped
+      volumes:
+        - ./data/pgadmin:/var/lib/pgadmin
+      ports:
+        - "8092:80"
