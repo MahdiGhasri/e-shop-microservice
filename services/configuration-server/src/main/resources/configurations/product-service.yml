@@ -1,5 +1,5 @@
 server:
-  port: 8091
+  port: 8082
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -11,5 +11,5 @@ spring:
     hibernate:
       ddl-auto: none
   liquibase:
-    change-log: classpath:/db/changelog-master.xml
+      change-log: classpath:/db/changelog-master.xml
 

@@ -1,5 +1,7 @@
 package com.mgh.product.service.impl;
 
+import org.springframework.stereotype.Component;
+
 import com.mgh.product.dto.ProductPurchaseResponse;
 import com.mgh.product.dto.ProductRequest;
 import com.mgh.product.dto.ProductResponse;
@@ -7,6 +9,7 @@ import com.mgh.product.entity.Category;
 import com.mgh.product.entity.Product;
 import com.mgh.product.service.ProductMapper;
 
+@Component
 class ProductMapperImpl implements ProductMapper {
 
 	@Override
