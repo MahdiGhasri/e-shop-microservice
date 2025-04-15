@@ -2,6 +2,7 @@ package com.mgh.product.entity;
 
 import java.math.BigDecimal;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -26,6 +27,7 @@ public class Product {
 	private Integer id;
 	private String name;
 	private String description;
+	@Column(name = "available_quantity")
 	private double availableQuantity;
 	private BigDecimal price;
 	@ManyToOne

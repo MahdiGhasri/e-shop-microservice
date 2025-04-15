@@ -17,7 +17,7 @@
 			<column name="description" type="text">
 				<constraints nullable="false" />
 			</column>
-			<column name="availableQuantity" type="double">
+			<column name="available_quantity" type="double">
 				<constraints nullable="false" />
 			</column>
 			<column name="price" type="number(38,2)">
