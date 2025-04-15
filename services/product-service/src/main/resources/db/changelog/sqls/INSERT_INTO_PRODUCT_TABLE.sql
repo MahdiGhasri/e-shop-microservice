@@ -17,10 +17,10 @@ INSERT INTO Product (name, description, available_quantity, price, category_id) 
 INSERT INTO Product (name, description, available_quantity, price, category_id) VALUES ('1984', 'A dystopian novel by George Orwell', 120, 11.20, 4);
 
 -- Products for Category 'Menswear' (Category ID: Assuming 7)
-INSERT INTO Product (name, description, available_quantity, price, category_id) VALUES ('Men\''s Classic T-Shirt', 'Comfortable cotton t-shirt for men', 500, 19.99, 7);
-INSERT INTO Product (name, description, available_quantity, price, category_id) VALUES ('Men\''s Denim Jeans', 'Durable and stylish denim jeans', 300, 49.50, 7);
-INSERT INTO Product (name, description, available_quantity, price, category_id) VALUES ('Men\''s Dress Shirt', 'Formal long-sleeved shirt for men', 200, 39.75, 7);
-INSERT INTO Product (name, description, available_quantity, price, category_id) VALUES ('Men\''s Casual Shorts', 'Comfortable shorts for everyday wear', 400, 24.00, 7);
+INSERT INTO Product (name, description, available_quantity, price, category_id) VALUES ('Men''s Classic T-Shirt', 'Comfortable cotton t-shirt for men', 500, 19.99, 7);
+INSERT INTO Product (name, description, available_quantity, price, category_id) VALUES ('Men''s Denim Jeans', 'Durable and stylish denim jeans', 300, 49.50, 7);
+INSERT INTO Product (name, description, available_quantity, price, category_id) VALUES ('Men''s Dress Shirt', 'Formal long-sleeved shirt for men', 200, 39.75, 7);
+INSERT INTO Product (name, description, available_quantity, price, category_id) VALUES ('Men''s Casual Shorts', 'Comfortable shorts for everyday wear', 400, 24.00, 7);
 
 -- Products for Category 'Furniture' (Category ID: Assuming 10)
 INSERT INTO Product (name, description, available_quantity, price, category_id) VALUES ('Sofa Set (3+2 Seater)', 'Comfortable sofa set for living room', 50, 499.00, 10);
