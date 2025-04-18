@@ -5,7 +5,19 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-	<changeSet id="add-product-table" author="mehdi">
+	<changeSet id="add-category-product-tables" author="mehdi">
+		<createTable tableName="category">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true"
+					primaryKeyName="PK_CATEGORY" />
+			</column>
+			<column name="name" type="varchar2(255)">
+				<constraints nullable="false" unique="true" />
+			</column>
+			<column name="description" type="text">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
 		<createTable tableName="product">
 			<column name="id" type="int" autoIncrement="true">
 				<constraints nullable="false" primaryKey="true"

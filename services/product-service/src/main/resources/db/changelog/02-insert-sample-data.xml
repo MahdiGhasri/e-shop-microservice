@@ -5,7 +5,8 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-	<changeSet id="insert-sample-data-into-category" author="mehdi">
+	<changeSet id="insert-sample-data" author="mehdi">
 		<sqlFile path="sqls/INSERT_INTO_CATEGORY_TABLE.sql" dbms="postgresql" encoding="UTF-8" relativeToChangelogFile="true"/>
+		<sqlFile path="sqls/INSERT_INTO_PRODUCT_TABLE.sql" dbms="postgresql" encoding="UTF-8" relativeToChangelogFile="true"/>
 	</changeSet>
 </databaseChangeLog>
