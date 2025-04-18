@@ -19,7 +19,7 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
-        spring.json.type.mapping: paymentConfirmation:com.mgh.payment_domain.kafka.PaymentNotificationRequest
+        spring.json.type.mapping: paymentConfirmation:com.mgh.payment_domain.notification.PaymentNotificationRequest
 
 application:
   config:
