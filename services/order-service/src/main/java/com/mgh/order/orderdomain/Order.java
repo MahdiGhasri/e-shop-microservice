@@ -16,6 +16,7 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -34,27 +35,30 @@ import lombok.Setter;
 public class Order {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@Column(unique = true, nullable = false)
 	private String reference;
 
+	@Column(name = "total_amount")
 	private BigDecimal totalAmount;
 
 	@Enumerated(EnumType.STRING)
+	@Column(name = "payment_method")
 	private PaymentMethod paymentMethod;
 
+	@Column(name = "customer_id", nullable = false)
 	private String customerId;
 
 	@OneToMany(mappedBy = "order")
 	private List<OrderItem> orderItems;
 
 	@CreatedDate
-	@Column(updatable = false, nullable = false)
+	@Column(name ="created_date", updatable = false, nullable = false)
 	private LocalDateTime createdDate;
 
 	@LastModifiedDate
-	@Column(insertable = false)
+	@Column(name = "last_modified_date", insertable = false)
 	private LocalDateTime lastModifiedDate;
 }

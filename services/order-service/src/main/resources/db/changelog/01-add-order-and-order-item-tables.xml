@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+	<changeSet id="add-order-and-order-item-tables" author="mehdi">
+		<createTable tableName="order">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true"
+					primaryKeyName="PK_ORDER" />
+			</column>
+			<column name="reference" type="varchar2(255)">
+				<constraints nullable="false" unique="true" />
+			</column>
+			<column name="totalAmount" type="NUMBER(38,2)"/>
+			<column name="payment_method" type="varchar2(50)"/>
+			<column name="customer_id" type="int">
+				<constraints nullable="false"/>
+			</column>
+			<column name="created_date" type="date">
+				<constraints nullable="false"/>
+			</column>
+			<column name="last_modified_date" type="date"/>
+		</createTable>
+		<createTable tableName="order_item">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true" primaryKeyName="PK_ORDER_ITEM" />
+			</column>
+			<column name="order_id" type="int">
+				<constraints nullable="false"/>
+			</column>
+			<column name="product_id" type="int">
+				<constraints nullable="false"/>
+			</column>
+			<column name="quantity" type="double">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+		<addForeignKeyConstraint baseTableName="order_item" baseColumnNames="order_id" constraintName="FK_ORDER_ID_ON_ORDER_ITEM"
+                             referencedTableName="order"
+                             referencedColumnNames="id"/>
+	</changeSet>
+</databaseChangeLog>
