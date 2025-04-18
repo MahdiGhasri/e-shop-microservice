@@ -68,6 +68,18 @@ services:
     volumes:
       - ./data/order-mysql-db:/var/lib/mysql
 
+  payment-mysql-db-service:
+    container_name: payment-mysql-db
+    image: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: payment
+    ports:
+      - 3307:3306
+    volumes:
+      - ./data/payment-mysql-db:/var/lib/mysql
+
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     container_name: zookeeper
