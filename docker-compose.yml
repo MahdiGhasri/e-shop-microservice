@@ -7,7 +7,8 @@ services:
       - 27017:27017
     volumes:
       - ./data/customer_mongo_db:/data/db
-    restart: unless-stopped
+      - ./data/customer_mongo_db/configdb:/data/configdb
+    restart: none
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: admin
@@ -15,7 +16,7 @@ services:
   mongo-express:
     container_name: customer_mongo_express
     image: mongo-express
-    restart: always
+    restart: none
     ports:
       - 8091:8081
     environment:
@@ -27,7 +28,7 @@ services:
   product-pg-db-service:
     container_name: product_pg_db
     image: postgres
-    restart: unless-stopped
+    restart: none
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: admin
@@ -46,7 +47,7 @@ services:
         PGADMIN_DEFAULT_EMAIL: mahdighasri@gmail.com
         PGADMIN_DEFAULT_PASSWORD: imo754&%$
         PGADMIN_CONFIG_SERVER_MODE: 'False'
-      restart: unless-stopped
+      restart: none
       volumes:
         - ./data/pgadmin:/var/lib/pgadmin
       ports:
@@ -59,7 +60,7 @@ services:
   order-mysql-db-service:
     container_name: order-mysql-db
     image: mysql
-    restart: unless-stopped
+    restart: none
     environment:
       MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: order
@@ -71,7 +72,7 @@ services:
   payment-mysql-db-service:
     container_name: payment-mysql-db
     image: mysql
-    restart: unless-stopped
+    restart: none
     environment:
       MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: payment
@@ -83,17 +84,24 @@ services:
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     container_name: zookeeper
+    restart: none
     environment:
       ZOOKEEPER_SERVER_ID: 1
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - "2181:2181"
+    volumes:
+      - ./data/zookeeper:/var/lib/zookeeper/data
+      - ./data/zookeeper/secrets:/etc/zookeeper/secrets
+      - ./data/zookeeper/log:/var/lib/zookeeper/log
     networks:
       - bridgenetwork
+  
   kafka:
     image: confluentinc/cp-kafka:latest
     container_name: ms_kafka
+    restart: none
     ports:
       - "9092:9092"
     depends_on:
@@ -105,6 +113,9 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+    volumes:
+      - ./data/kafka:/var/lib/kafka/data
+      - ./data/kafka/secrets:/etc/kafka/secrets
     networks:
       - bridgenetwork
 
