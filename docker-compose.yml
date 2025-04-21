@@ -1,6 +1,6 @@
 services:
 
-  mongo-db:
+  customer-mongo-db:
     container_name: customer_mongo_db
     image: mongo
     ports:
@@ -8,27 +8,29 @@ services:
     volumes:
       - ./data/customer_mongo_db:/data/db
       - ./data/customer_mongo_db/configdb:/data/configdb
-    restart: none
+    restart: on-failure
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: admin
 
-  mongo-express:
+  customer-mongo-express:
     container_name: customer_mongo_express
     image: mongo-express
-    restart: none
+    restart: on-failure
     ports:
       - 8091:8081
+    depends_on:
+      - customer-mongo-db
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: admin
-      ME_CONFIG_MONGODB_URL: mongodb://root:admin@mongo-db:27017/
+      ME_CONFIG_MONGODB_URL: mongodb://root:admin@customer-mongo-db:27017/
       ME_CONFIG_BASICAUTH: false
   
   product-pg-db-service:
     container_name: product_pg_db
     image: postgres
-    restart: none
+    restart: on-failure
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: admin
@@ -47,7 +49,7 @@ services:
         PGADMIN_DEFAULT_EMAIL: mahdighasri@gmail.com
         PGADMIN_DEFAULT_PASSWORD: imo754&%$
         PGADMIN_CONFIG_SERVER_MODE: 'False'
-      restart: none
+      restart: on-failure
       volumes:
         - ./data/pgadmin:/var/lib/pgadmin
       ports:
@@ -60,7 +62,7 @@ services:
   order-mysql-db-service:
     container_name: order-mysql-db
     image: mysql
-    restart: none
+    restart: on-failure
     environment:
       MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: order
@@ -72,7 +74,7 @@ services:
   payment-mysql-db-service:
     container_name: payment-mysql-db
     image: mysql
-    restart: none
+    restart: on-failure
     environment:
       MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: payment
@@ -84,7 +86,7 @@ services:
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     container_name: zookeeper
-    restart: none
+    restart: on-failure
     environment:
       ZOOKEEPER_SERVER_ID: 1
       ZOOKEEPER_CLIENT_PORT: 2181
@@ -92,16 +94,16 @@ services:
     ports:
       - "2181:2181"
     volumes:
-      - ./data/zookeeper:/var/lib/zookeeper/data
-      - ./data/zookeeper/secrets:/etc/zookeeper/secrets
+      - ./data/zookeeper/data:/var/lib/zookeeper/data
       - ./data/zookeeper/log:/var/lib/zookeeper/log
+      - ./data/zookeeper/secrets:/etc/zookeeper/secrets
     networks:
       - bridgenetwork
   
   kafka:
     image: confluentinc/cp-kafka:latest
     container_name: ms_kafka
-    restart: none
+    restart: on-failure
     ports:
       - "9092:9092"
     depends_on:
@@ -114,7 +116,7 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
     volumes:
-      - ./data/kafka:/var/lib/kafka/data
+      - ./data/kafka/data:/var/lib/kafka/data
       - ./data/kafka/secrets:/etc/kafka/secrets
     networks:
       - bridgenetwork
