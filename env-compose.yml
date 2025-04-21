@@ -1,0 +1,4 @@
+networks:
+  bridgenetwork:
+    driver: bridge
+        

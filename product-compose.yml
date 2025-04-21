@@ -1,0 +1,16 @@
+services:
+  
+  product-pg-db-service:
+    container_name: product_pg_db
+    image: postgres
+    restart: on-failure
+    environment:
+      POSTGRES_USER: ${PRODUCT_DB_USER_NAME}
+      POSTGRES_PASSWORD: ${PRODUCT_DB_PASSWORD}
+      POSTGRES_DB: ${PRODUCT_DB_NAME}
+    ports:
+      - ${PRODUCT_DB_SERVICE_PORT}:5432
+    volumes:
+      - ./data/product_pg_db:/var/lib/postgresql/data
+    networks:
+        - bridgenetwork

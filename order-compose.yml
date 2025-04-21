@@ -1,0 +1,13 @@
+services:
+  
+  order-mysql-db-service:
+    container_name: order-mysql-db
+    image: mysql
+    restart: on-failure
+    environment:
+      MYSQL_ROOT_PASSWORD: ${ORDER_DB_PASSWORD}
+      MYSQL_DATABASE: ${ORDER_DB_NAME}
+    ports:
+      - ${ORDER_DB_SERVICE_PORT}:3306
+    volumes:
+      - ./data/order-mysql-db:/var/lib/mysql

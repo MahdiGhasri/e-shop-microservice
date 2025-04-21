@@ -1,0 +1,28 @@
+services:
+
+  customer-mongo-db:
+    container_name: customer_mongo_db
+    image: mongo
+    ports:
+      - ${CUSTOMER_DB_SERVICE_PORT}:27017
+    volumes:
+      - ./data/customer_mongo_db:/data/db
+      - ./data/customer_mongo_db/configdb:/data/configdb
+    restart: on-failure
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${CUSTOMER_DB_USER_NAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${CUSTOMER_DB_PASSWORD}
+
+  customer-mongo-express:
+    container_name: customer_mongo_express
+    image: mongo-express
+    restart: on-failure
+    ports:
+      - ${CUSTOMER_MONGO_EXPRESS_PORT}:8081
+    depends_on:
+      - ${CUSTOMER_DB_SERVICE_NAME}
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${CUSTOMER_MONGO_EXPRESS_USER_NAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${CUSTOMER_MONGO_EXPRESS_PASSWORD}
+      ME_CONFIG_MONGODB_URL: mongodb://${CUSTOMER_MONGO_EXPRESS_USER_NAME}:${CUSTOMER_MONGO_EXPRESS_PASSWORD}@${CUSTOMER_DB_SERVICE_NAME}:27017/
+      ME_CONFIG_BASICAUTH: false
