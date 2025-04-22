@@ -62,6 +62,12 @@ services:
       - ./data/kafka/secrets:/etc/kafka/secrets
     networks:
       - bridgenetwork
+  mail-dev:
+    container_name: ms-mail-dev
+    image: maildev/maildev
+    ports:
+      - 1080:1080
+      - 1025:1025
 
 networks:
   bridgenetwork:
