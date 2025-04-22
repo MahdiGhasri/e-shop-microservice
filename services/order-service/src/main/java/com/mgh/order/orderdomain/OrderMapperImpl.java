@@ -10,8 +10,13 @@ class OrderMapperImpl implements OrderMapper {
 		if (request == null) {
 			return null;
 		}
-		return Order.builder().id(request.id()).reference(request.reference()).paymentMethod(request.paymentMethod())
-				.customerId(request.customerId()).build();
+		return Order.builder()
+				.id(request.id())
+				.reference(request.reference())
+				.paymentMethod(request.paymentMethod())
+				.customerId(request.customerId())
+				.totalAmount(request.amount())
+				.build();
 	}
 
 	@Override

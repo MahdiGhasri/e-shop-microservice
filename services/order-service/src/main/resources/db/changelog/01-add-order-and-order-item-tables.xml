@@ -14,9 +14,9 @@
 			<column name="reference" type="varchar2(255)">
 				<constraints nullable="false" unique="true" />
 			</column>
-			<column name="totalAmount" type="NUMBER(38,2)"/>
+			<column name="total_amount" type="NUMBER(38,2)"/>
 			<column name="payment_method" type="varchar2(50)"/>
-			<column name="customer_id" type="int">
+			<column name="customer_id" type="varchar2(50)">
 				<constraints nullable="false"/>
 			</column>
 			<column name="created_date" type="date">

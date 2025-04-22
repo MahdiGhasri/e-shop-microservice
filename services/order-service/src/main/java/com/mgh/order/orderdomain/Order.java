@@ -19,6 +19,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,6 +33,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+@Table(name = "`order`")
 public class Order {
 
 	@Id
@@ -41,7 +43,7 @@ public class Order {
 	@Column(unique = true, nullable = false)
 	private String reference;
 
-	@Column(name = "total_amount")
+	@Column(name = "total_amount", nullable = false)
 	private BigDecimal totalAmount;
 
 	@Enumerated(EnumType.STRING)

@@ -38,8 +38,8 @@ class OrderServiceImpl implements OrderService {
 				() -> new BusinessException("Cannot create order:: No customer exists with the provided ID"));
 
 		var purchasedProducts = productClient.purchaseProducts(request.products());
-
-		var order = this.repository.save(mapper.toOrder(request));
+		var orderToSave = mapper.toOrder(request);
+		var order = this.repository.save(orderToSave);
 
 		for (PurchaseRequest purchaseRequest : request.products()) {
 			orderItemService.saveOrderItem(
