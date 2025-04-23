@@ -1,5 +1,6 @@
 package com.mgh.order.orderdomain;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -38,18 +39,21 @@ class OrderServiceImpl implements OrderService {
 				() -> new BusinessException("Cannot create order:: No customer exists with the provided ID"));
 
 		var purchasedProducts = productClient.purchaseProducts(request.products());
+		var totalAmount = BigDecimal.valueOf(purchasedProducts.stream().mapToDouble(m -> m.price().doubleValue() * m.quantity()).sum());
+		
 		var orderToSave = mapper.toOrder(request);
+		orderToSave.setTotalAmount(totalAmount);
 		var order = this.repository.save(orderToSave);
 
 		for (PurchaseRequest purchaseRequest : request.products()) {
 			orderItemService.saveOrderItem(
 					new OrderItemRequest(null, order.getId(), purchaseRequest.productId(), purchaseRequest.quantity()));
 		}
-		var paymentRequest = new PaymentRequest(request.amount(), request.paymentMethod(), order.getId(),
+		var paymentRequest = new PaymentRequest(totalAmount, request.paymentMethod(), order.getId(),
 				order.getReference(), customer);
 		paymentClient.requestOrderPayment(paymentRequest);
 
-		orderProducer.sendOrderConfirmation(new OrderConfirmation(request.reference(), request.amount(),
+		orderProducer.sendOrderConfirmation(new OrderConfirmation(request.reference(), totalAmount,
 				request.paymentMethod(), customer, purchasedProducts));
 
 		return order.getId();
