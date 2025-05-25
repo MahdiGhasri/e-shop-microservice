@@ -1,15 +1,10 @@
 package com.mgh.order.payment;
 
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.service.annotation.PostExchange;
 
-@FeignClient(
-    name = "product-service",
-    url = "${application.config.payment-url}"
-)
 public interface PaymentClient {
 
-  @PostMapping
+  @PostExchange
   Integer requestOrderPayment(@RequestBody PaymentRequest request);
 }
