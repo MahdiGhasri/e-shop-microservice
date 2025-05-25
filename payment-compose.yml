@@ -3,7 +3,7 @@ services:
   payment-mysql-db-service:
     container_name: payment-mysql-db
     image: mysql
-    restart: on-failure
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${PAYMENT_DB_PASSWORD}
       MYSQL_DATABASE: ${PAYMENT_DB_NAME}

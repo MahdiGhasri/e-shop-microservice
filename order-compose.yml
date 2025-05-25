@@ -3,7 +3,7 @@ services:
   order-mysql-db-service:
     container_name: order-mysql-db
     image: mysql
-    restart: on-failure
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${ORDER_DB_PASSWORD}
       MYSQL_DATABASE: ${ORDER_DB_NAME}

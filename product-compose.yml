@@ -3,7 +3,7 @@ services:
   product-pg-db-service:
     container_name: product_pg_db
     image: postgres
-    restart: on-failure
+    restart: unless-stopped
     environment:
       POSTGRES_USER: ${PRODUCT_DB_USER_NAME}
       POSTGRES_PASSWORD: ${PRODUCT_DB_PASSWORD}

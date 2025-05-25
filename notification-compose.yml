@@ -8,7 +8,7 @@ services:
     volumes:
       - ./data/notification_mongo_db:/data/db
       - ./data/notification_mongo_db/configdb:/data/configdb
-    restart: on-failure
+    restart: unless-stopped
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${NOTIFICATION_DB_USER_NAME}
       MONGO_INITDB_ROOT_PASSWORD: ${NOTIFICATION_DB_PASSWORD}
@@ -16,7 +16,7 @@ services:
   notification-mongo-express:
     container_name: notification_mongo_express
     image: mongo-express
-    restart: on-failure
+    restart: unless-stopped
     ports:
       - ${NOTIFICATION_MONGO_EXPRESS_PORT}:8081
     depends_on:
