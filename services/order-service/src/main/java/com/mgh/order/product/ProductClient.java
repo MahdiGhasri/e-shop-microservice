@@ -2,6 +2,11 @@ package com.mgh.order.product;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.service.annotation.PostExchange;
+
 public interface ProductClient {
-	List<PurchaseResponse> purchaseProducts(List<PurchaseRequest> requestBody);
+
+	@PostExchange("/purchase")
+	List<PurchaseResponse> purchaseProducts(@RequestBody List<PurchaseRequest> requestBody);
 }

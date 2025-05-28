@@ -14,6 +14,7 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
 import com.mgh.order.customer.CustomerClient;
 import com.mgh.order.payment.PaymentClient;
+import com.mgh.order.product.ProductClient;
 
 @Configuration
 public class RestClientConfiguration {
@@ -23,6 +24,9 @@ public class RestClientConfiguration {
 
 	@Value("${application.config.payment-url}")
 	private String paymentServiceUrl;
+	
+	@Value("${application.config.product-url}")
+	private String productUrl;
 
 	@Bean
 	CustomerClient customerClient() {
@@ -40,6 +44,15 @@ public class RestClientConfiguration {
 		var restClientAdapter = RestClientAdapter.create(restClient);
 		var httpServiceProxyFactory = HttpServiceProxyFactory.builderFor(restClientAdapter).build();
 		return httpServiceProxyFactory.createClient(PaymentClient.class);
+	}
+	
+	@Bean
+	ProductClient productClient() {
+		RestClient restClient = RestClient.builder().baseUrl(productUrl)
+				.requestFactory(getClientRequestFactory()).build();
+		var restClientAdapter = RestClientAdapter.create(restClient);
+		var httpServiceProxyFactory = HttpServiceProxyFactory.builderFor(restClientAdapter).build();
+		return httpServiceProxyFactory.createClient(ProductClient.class);
 	}
 
 	private ClientHttpRequestFactory getClientRequestFactory() {
