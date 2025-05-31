@@ -1,0 +1,34 @@
+services:
+  
+  key-cloack-mysql-db-service:
+    container_name: key-cloack-mysql-db
+    image: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${KC_DB_PASSWORD}
+      MYSQL_DATABASE: ${KC_DB_NAME}
+    ports:
+      - ${KC_DB_SERVICE_PORT}:3306
+    volumes:
+      - ./data/key-cloack-mysql-db:/var/lib/mysql
+
+  keycloak:
+    container_name: security-service
+    image: quay.io/keycloak/keycloak
+    restart: unless-stopped
+    ports:
+      - 8094:8080
+    depends_on:	
+      - key-cloack-mysql-db-service
+    environment:
+      DB: MYSQL
+      DB_URL_HOST: key-cloack-mysql-db
+      DB_SCHEMA: ${KC_DB_NAME}
+      DB_PASSWORD: ${KC_DB_PASSWORD}
+      KC_BOOTSTRAP_ADMIN_USERNAME: root
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+    command: [ "start-dev", "--import-realm" ]
+    volumes:
+      - ./data/keycloak/realms/:/opt/keycloak/data/import/
+    networks:
+      - bridgenetwork
