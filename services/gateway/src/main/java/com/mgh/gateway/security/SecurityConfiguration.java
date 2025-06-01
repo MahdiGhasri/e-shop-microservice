@@ -12,8 +12,8 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
-//@Configuration
-//@EnableWebFluxSecurity 
+@Configuration
+@EnableWebFluxSecurity 
 public class SecurityConfiguration {
 
     private final String[] freeResourceUrls = {"/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**",
